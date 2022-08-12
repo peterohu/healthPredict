@@ -21,7 +21,8 @@ const createHoso  = expressAsyncHandler(async (req, res) => {
         hutthuoc: ' ',
         user: req.user._id,
         stroke:false,
-        nguoitao:' '
+        nguoitao:' ',
+        lankham: 1
     })
 
     const createdHoso = await hoso.save()
@@ -45,7 +46,7 @@ const updateHoso = expressAsyncHandler(async (req, res) => {
         bmi,
         congviec,
         hutthuoc,
-        nguoitao } = req.body
+        nguoitao, lankham } = req.body
 
     const hoso = await Hoso.findById(req.params.id)
     if(hoso){
@@ -91,5 +92,18 @@ const getHosoById = expressAsyncHandler(async (req, res) => {
         res.status(404).json({message: 'Không tìm thấy hồ sơ!'})
     }
 })
-export { createHoso, getHoso, updateHoso, getHosoById }
+
+const deleteHoso = expressAsyncHandler(async (req, res) => {
+    
+    const hoso = await Hoso.findById(req.params.id)
+    
+    if(hoso){
+        await hoso.remove()
+        res.json({message: 'Xoá hồ sơ thành công!'})
+    } else {
+        res.status(404)
+        throw new Error('Không tìm thấy hồ sơ!')
+    }   
+})
+export { createHoso, getHoso, updateHoso, getHosoById, deleteHoso }
 

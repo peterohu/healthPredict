@@ -66,7 +66,7 @@ export const taoHosoAction = () => async (dispatch, getState) => {
     }
 }
 
-export const updateHoso = (benhnhan) => async (dispatch, getState) => {
+export const updateHosoAction = (benhnhan) => async (dispatch, getState) => {
     try {
         dispatch({type: 'UPDATE_HOSO_REQUEST'})
 
@@ -90,6 +90,34 @@ export const updateHoso = (benhnhan) => async (dispatch, getState) => {
     } catch (error) {
         dispatch({ 
             type: 'UPDATE_HOSO_FAIL' , 
+            payload: error.response && error.response.data.message ? error.response.data.message : error.message
+        })
+    }
+}
+
+export const deleteHosoAction = (id) => async (dispatch, getState) => {
+    try {
+        dispatch({type: 'DELETE_HOSO_REQUEST'})
+
+        const {userLogin: {userInfo}} = getState()
+
+        const config = {
+            headers: {
+                //'Content-Type': 'application/json', // use for post/put request
+                Authorization: `Bearer ${userInfo.token}`
+            }
+        }
+
+        await axios.delete(`/api/benh-nhan/${id}`, config)
+
+        dispatch({
+            type: 'DELETE_HOSO_SUCCESS'
+        })
+        
+        
+    } catch (error) {
+        dispatch({ 
+            type: 'DELETE_HOSO_FAIL' , 
             payload: error.response && error.response.data.message ? error.response.data.message : error.message
         })
     }

@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { listBenhnhanAction, taoHosoAction } from '../actions/benhnhanaction'
+import { listBenhnhanAction, taoHosoAction, deleteHosoAction } from '../actions/benhnhanaction'
+import swal from 'sweetalert';
 import EditIcon from '@material-ui/icons/Edit';
 import dateFormat from 'dateformat';
 import MaterialTable from 'material-table';
@@ -55,14 +56,36 @@ const Danhsach = ({history}) => {
     const  taoHoso =  useSelector(state => state.taoHoso)
     const { success: createSuccess, benhnhan: createdHoso} = taoHoso
 
+    const  xoaHoso =  useSelector(state => state.xoaHoso)
+    const {loading: deleteLoading, error: deleteError, success: deleteSuccess} = xoaHoso
     
     const addHandler = () => {
       dispatch(taoHosoAction())
     }
     const updateHandler = (id) => {
       window.location.href = `/admin/benh-nhan/${id}/chinh-sua`
-  }
+    }
     
+    const deleteHandler = (id) => {
+        swal({
+            title: "Bạn có chắc xóa hồ sơ này?",
+            text: "Không thể hoàn tác hành động này khi bấm nút xóa!",
+            icon: "warning",
+            buttons: ['Hủy', 'Xóa'],
+            dangerMode: true,
+          })
+          .then((Delete) => {
+            if (Delete) {
+              swal("Xóa hồ sơ thành công!", {
+                icon: "success",
+              });
+              dispatch(deleteHosoAction(id))
+            } else {
+              swal("Hủy xóa!");
+            }
+          });
+    }
+
     const columns = [
         { field: '_id', title: 'Số hồ sơ',
           render: row =>
@@ -128,11 +151,11 @@ const Danhsach = ({history}) => {
         dispatch(listBenhnhanAction()) 
       }
 
-  },[dispatch, history, userInfo, createSuccess, createdHoso])
+  },[dispatch, history, userInfo, createSuccess, createdHoso, deleteSuccess])
 
 
   return (
-    <div style = {{minHeight:'90vh'}}>
+    <div style = {{minHeight:'80vh'}}>
     
     <div>
 
@@ -189,6 +212,14 @@ const Danhsach = ({history}) => {
 
           }
         ]}
+        editable={{
+                            
+          onRowDelete: row =>
+              new Promise((resolve, reject) => {
+              deleteHandler(row._id)
+              resolve()
+              }),
+        }}  
 
         
                           

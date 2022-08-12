@@ -60,3 +60,19 @@ export const capnhatHosoReducer =  (state = {benhnhan: {}}, action) => {
             return state
     }
 }
+
+export const xoaHosoReducer =  (state = {}, action) => {
+    switch (action.type) {
+        case 'DELETE_HOSO_REQUEST':
+            return {loading: true}
+
+        case 'DELETE_HOSO_SUCCESS':
+            return {loading: false, success: true}
+
+        case 'DELETE_HOSO_FAIL':
+            return {loading: false, error : action.payload}
+
+        default:
+            return state
+    }
+}

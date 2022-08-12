@@ -2,7 +2,8 @@ import { createStore, combineReducers, applyMiddleware } from 'redux'
 import thunk from 'redux-thunk'
 import { composeWithDevTools } from 'redux-devtools-extension'
 
-import { danhsachbenhnhanReducers, taoHosoReducer, capnhatHosoReducer, danhsachchitietReducers } from './reducers/benhnhanReducer'
+import { danhsachbenhnhanReducers, taoHosoReducer, capnhatHosoReducer, 
+    danhsachchitietReducers, xoaHosoReducer } from './reducers/benhnhanReducer'
 
 import { userLoginReducer } from './reducers/userReducer'
 
@@ -11,7 +12,8 @@ const reducer = combineReducers({
     userLogin: userLoginReducer,
     taoHoso: taoHosoReducer,
     capnhatHoso: capnhatHosoReducer,
-    danhsachchitiet: danhsachchitietReducers
+    danhsachchitiet: danhsachchitietReducers,
+    xoaHoso: xoaHosoReducer,
 })
 
 

@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Form, Button, Row, FormControl, Container } from 'react-bootstrap'
-import { updateHoso, listBenhnhanchitietAction } from '../actions/benhnhanaction'
+import { Form, Button, Row, Col, FormControl, Container } from 'react-bootstrap'
+import { updateHosoAction, listBenhnhanchitietAction } from '../actions/benhnhanaction'
 import Message from '../elements/Message'
 import Loading from '../elements/Loading'
 import axios from 'axios';
@@ -352,7 +352,7 @@ const Tiepnhan = ({history, match}) => {
         } 
         // END CHILDREN
         
-        dispatch(updateHoso({_id: benhnhanId, ten,
+        dispatch(updateHosoAction({_id: benhnhanId, ten,
             diachi,
             tinhtrangbenh,
             sodienthoai,
@@ -376,53 +376,99 @@ const Tiepnhan = ({history, match}) => {
       }
     
   return (
-    <Container>
-        <Row className='justify-content-md-center mt-3 shadowBestSeller' style={{backgroundColor:'white', borderRadius:'10px', paddingBottom: '25px', marginBottom: '35px'}}>
-            <Container>
-                <h5  style={{fontWeight:'bold', fontSize:'14px'}}>Tiếp nhận bệnh nhân</h5>
-                <hr style={{border:'1px solid #61b337'}}></hr>
-            </Container>    
-            {updateLoading && <Loading />}
-            {updateError && <Message variant='danger'>{updateError}</Message>}
-            {loading ? (
-              <Loading />
-            ) : error ? (
-              <Message variant='danger'>{error}</Message>
-            ) : (
-            <Form onSubmit={submitHandler}>
+    <Row className='pt-2 justify-content-md-center' style = {{minHeight:'80vh'}}>
+
+      <Col md={8}>
+      <Row className=' mt-5 shadowBestSeller' style={{backgroundColor:'white', borderRadius:'10px', paddingBottom: '25px', marginBottom: '35px'}}>
+      <Container>
+      <div className='text-center cartIcon'><i style={{fontSize:'30px', paddingTop:'27px', color:'#67ade9'}} className="fa-solid fa-user-pen"></i></div>
+      </Container>
+          <Container>
+         
+              <h5 className='pt-3' style={{fontWeight:'bold'}}>Tiếp nhận bệnh nhân</h5>
+              <hr style={{border:'1px solid #67ade9'}}></hr>
+          </Container>    
+          {updateLoading && <Loading />}
+          {updateError && <Message variant='danger'>{updateError}</Message>}
+          {loading ? (
+            <Loading />
+          ) : error ? (
+            <Message variant='danger'>{error}</Message>
+          ) : (
+          <Form onSubmit={submitHandler}>
+              <Row>
+                <Col>
+                  <Form.Group controlId='phone' className='p-1'>
+                  <Form.Label style={{fontSize:'14px', fontWeight:'bold'}}>Họ và tên</Form.Label>
+                  <FormControl 
+                  type='text' 
+                  placeholder='Nhập họ và tên bệnh nhân' 
+                  value={ten}
+                  onChange={(e) => setten(e.target.value)}
+                  ></FormControl>
+                </Form.Group>
+                </Col>   
                 
+                <Col>
                 <Form.Group controlId='phone' className='p-1'>
-                    <Form.Label style={{fontSize:'14px'}}>ten</Form.Label>
-                    <FormControl 
-                    type='text' 
-                    placeholder='Nhập số điện thoại' 
-                    value={ten}
-                    onChange={(e) => setten(e.target.value)}
-                    ></FormControl>
+                  <Form.Label style={{fontSize:'14px', fontWeight:'bold'}}>Tuổi</Form.Label>
+                  <FormControl 
+                  type='text' 
+                  placeholder='Nhập số tuổi' 
+                  value={tuoi}
+                  onChange={(e) => settuoi(e.target.value)}
+                  ></FormControl>
                 </Form.Group>
+                </Col>
 
+                <Col>
                 <Form.Group controlId='phone' className='p-1'>
-                <Form.Label style={{fontSize:'14px'}}>cmnd</Form.Label>
-                <FormControl 
-                type='text' 
-                placeholder='Nhập số điện thoại' 
-                value={cmnd}
-                onChange={(e) => setcmnd(e.target.value)}
-                ></FormControl>
-                </Form.Group>
+                <Form.Label style={{fontSize:'14px', fontWeight:'bold'}}>Giới tính</Form.Label>
+                <Form.Select aria-label="Default select example"
+                value={gioitinh}
+                onChange={(e) => setgioitinh(e.target.value)}
+                >
+                <option>Giới tính</option>
+                <option value="Nam">Nam</option>
+                <option value="Nữ">Nữ</option>
+              </Form.Select>
+              </Form.Group>
+                </Col>
+              </Row>
+            
+              <Row>
+                <Col>
+                <Form.Group controlId='phone' className='p-1'>
+              <Form.Label style={{fontSize:'14px', fontWeight:'bold'}}>CMND/CCCD</Form.Label>
+              <FormControl 
+              type='text' 
+              placeholder='Nhập cmnd/cccd' 
+              value={cmnd}
+              onChange={(e) => setcmnd(e.target.value)}
+              ></FormControl>
+              </Form.Group>
+                </Col>
 
-                <Form.Group controlId='phone' className='p-1'>
-                <Form.Label style={{fontSize:'14px'}}>diachi</Form.Label>
-                <FormControl 
-                type='text' 
-                placeholder='Nhập số điện thoại' 
-                value={diachi}
-                onChange={(e) => setdiachi(e.target.value)}
-                ></FormControl>
-                </Form.Group>
+                  <Col>
+                  <Form.Group controlId='phone' className='p-1'>
+                  <Form.Label style={{fontSize:'14px', fontWeight:'bold'}}>Địa chỉ</Form.Label>
+                  <FormControl 
+                  type='text' 
+                  placeholder='Nhập địa chỉ' 
+                  value={diachi}
+                  onChange={(e) => setdiachi(e.target.value)}
+                  ></FormControl>
+                  </Form.Group>
+                  </Col>
 
-                <Form.Group controlId='phone' className='p-1'>
-                <Form.Label style={{fontSize:'14px'}}>sodienthoai</Form.Label>
+                  
+              </Row>
+             
+            <Row>
+              
+              <Col>
+              <Form.Group controlId='phone' className='p-1'>
+                <Form.Label style={{fontSize:'14px', fontWeight:'bold'}}>Số điện thoại</Form.Label>
                 <FormControl 
                 type='text' 
                 placeholder='Nhập số điện thoại' 
@@ -430,142 +476,147 @@ const Tiepnhan = ({history, match}) => {
                 onChange={(e) => setsodienthoai(e.target.value)}
                 ></FormControl>
             </Form.Group>
-
-                
-                <Form.Group controlId='phone' className='p-1'>
-                <Form.Label style={{fontSize:'14px'}}>tinhtrangbenh</Form.Label>
-                <FormControl 
-                type='text' 
-                placeholder='Nhập số điện thoại' 
-                value={tinhtrangbenh}
-                onChange={(e) => settinhtrangbenh(e.target.value)}
-                ></FormControl>
-                </Form.Group>
-
-              
-                <Form.Group controlId='phone' className='p-1'>
-                    <Form.Label style={{fontSize:'14px'}}>tuoi</Form.Label>
-                    <FormControl 
-                    type='text' 
-                    placeholder='Nhập số điện thoại' 
-                    value={tuoi}
-                    onChange={(e) => settuoi(e.target.value)}
-                    ></FormControl>
-                </Form.Group>
-
-                <Form.Group controlId='phone' className='p-1'>
-                  <Form.Label style={{fontSize:'14px'}}>Giới tính</Form.Label>
-                  <Form.Select aria-label="Default select example"
-                  value={gioitinh}
-                  onChange={(e) => setgioitinh(e.target.value)}
-                  >
-                  <option>Giới tính</option>
-                  <option value="Nam">Nam</option>
-                  <option value="Nữ">Nữ</option>
-                </Form.Select>
-                </Form.Group>
-                
-
-                <Form.Group controlId='phone' className='p-1'>
-                    <Form.Label style={{fontSize:'14px'}}>tanghuyetap</Form.Label>
-                    <Form.Check type="checkbox" 
-                    checked = {tanghuyetap}
-                    onChange={(e) => settanghuyetap(!tanghuyetap)}
-                    />
-                    
-                </Form.Group>
-
-                <Form.Group controlId='phone' className='p-1'>
-                <Form.Label style={{fontSize:'14px'}}>benhtim</Form.Label>
-                <Form.Check type="checkbox" 
-                checked = {benhtim}
-                onChange={(e) => setbenhtim(!benhtim)}
-                    />
+              </Col>
+              <Col>
                
-                </Form.Group>
+              <Form.Group controlId='phone' className='p-1'>
+              <Form.Label style={{fontSize:'14px', fontWeight:'bold'}}>Khu vực</Form.Label>
+              <Form.Select aria-label="Default select example"
+              value={khuvuc}
+              onChange={(e) => setkhuvuc(e.target.value)}
+              >
+              <option>Khu vực</option>
+              <option value="1">Khu vực I</option>
+              <option value="2">Khu vực II</option>
+              <option value="3">Khu vực III</option>
+            </Form.Select>
+            </Form.Group>
+              </Col>
+            </Row>
+              
+            
+            <Form.Group controlId='phone' className='p-1'>
+            <Form.Label style={{fontSize:'14px', fontWeight:'bold'}}>Tình trạng bệnh tiếp nhận</Form.Label>
+            <FormControl 
+            type='text' 
+            placeholder='Nhập tình trạng bệnh' 
+            value={tinhtrangbenh}
+            onChange={(e) => settinhtrangbenh(e.target.value)}
+            ></FormControl>
+            </Form.Group>
+            
 
-                 <Form.Group controlId='phone' className='p-1'>
-                    <Form.Label style={{fontSize:'14px'}}>kethon</Form.Label>
-                    <Form.Check type="checkbox" 
-                    checked = {kethon}
-                    onChange={(e) => setkethon(!kethon)}
-                    />
-                </Form.Group>
+            <Row>
+              <Col>
+              <Form.Group controlId='phone' className='p-1'>
+                  <Form.Label style={{fontSize:'14px', fontWeight:'bold'}}>Tăng huyết áp</Form.Label>
+                  <Form.Check type="checkbox" 
+                  checked = {tanghuyetap}
+                  onChange={(e) => settanghuyetap(!tanghuyetap)}
+                  />
+                  
+              </Form.Group>
+              </Col>
 
-                
-                <Form.Group controlId='phone' className='p-1'>
-                <Form.Label style={{fontSize:'14px'}}>Khu vực</Form.Label>
-                <Form.Select aria-label="Default select example"
-                value={khuvuc}
-                onChange={(e) => setkhuvuc(e.target.value)}
-                >
-                <option>Khu vực</option>
-                <option value="1">Khu vực I</option>
-                <option value="2">Khu vực II</option>
-                <option value="3">Khu vực III</option>
+              <Col>
+              
+              <Form.Group controlId='phone' className='p-1'>
+              <Form.Label style={{fontSize:'14px', fontWeight:'bold'}}>Bệnh tim</Form.Label>
+              <Form.Check type="checkbox" 
+              checked = {benhtim}
+              onChange={(e) => setbenhtim(!benhtim)}
+                  />
+             
+              </Form.Group>
+              </Col>
+
+              <Col>
+              
+              <Form.Group controlId='phone' className='p-1'>
+              <Form.Label style={{fontSize:'14px', fontWeight:'bold'}}>Kết hôn</Form.Label>
+              <Form.Check type="checkbox" 
+              checked = {kethon}
+              onChange={(e) => setkethon(!kethon)}
+              />
+          </Form.Group>
+              </Col>
+            </Row>
+              
+            <Row>
+              <Col>
+              <Form.Group controlId='phone' className='p-1'>
+                  <Form.Label style={{fontSize:'14px', fontWeight:'bold'}}>Chỉ số Glucose</Form.Label>
+                  <FormControl 
+                  type='text' 
+                  placeholder='Nhập chỉ số glucose' 
+                  value={glucose}
+                  onChange={(e) => setglucose(e.target.value)}
+                  ></FormControl>
+              </Form.Group>
+              </Col>
+
+              <Col>
+              <Form.Group controlId='phone' className='p-1'>
+              <Form.Label style={{fontSize:'14px', fontWeight:'bold'}}>Chỉ số BMI</Form.Label>
+              <FormControl 
+              type='text' 
+              placeholder='Nhập chỉ số BMI' 
+              value={bmi}
+              onChange={(e) => setbmi(e.target.value)}
+              ></FormControl>
+              </Form.Group>
+              </Col>
+            </Row>
+
+
+             <Row>
+              <Col>
+              <Form.Group controlId='phone' className='p-1'>
+              <Form.Label style={{fontSize:'14px', fontWeight:'bold'}}>Công việc</Form.Label>
+              <Form.Select aria-label="Default select example"
+              value={congviec}
+              onChange={(e) => setcongviec(e.target.value)}
+              >
+              <option>Công việc</option>
+              <option value="gov">Nhà nước</option>
+              <option value="never">Không rõ</option>
+              <option value="private">Tư nhân</option>
+              <option value="children">Trẻ em</option>
+              <option value="self">Nội trợ</option>
               </Form.Select>
               </Form.Group>
+              </Col>
 
-               <Form.Group controlId='phone' className='p-1'>
-                    <Form.Label style={{fontSize:'14px'}}>glucose</Form.Label>
-                    <FormControl 
-                    type='text' 
-                    placeholder='Nhập số điện thoại' 
-                    value={glucose}
-                    onChange={(e) => setglucose(e.target.value)}
-                    ></FormControl>
-                </Form.Group>
-
-                <Form.Group controlId='phone' className='p-1'>
-                <Form.Label style={{fontSize:'14px'}}>bmi</Form.Label>
-                <FormControl 
-                type='text' 
-                placeholder='Nhập số điện thoại' 
-                value={bmi}
-                onChange={(e) => setbmi(e.target.value)}
-                ></FormControl>
-                </Form.Group>
+              <Col>
+              <Form.Group controlId='phone' className='p-1'>
+              <Form.Label style={{fontSize:'14px', fontWeight:'bold'}}>Hút thuốc</Form.Label>
+              <Form.Select aria-label="Default select example"
+              value={hutthuoc}
+              onChange={(e) => sethutthuoc(e.target.value)}
+              >
+              <option>Hút thuốc</option>
+              <option value="usually">Thường xuyên</option>
+              <option value="unknown">Không rõ</option>
+              <option value="no">Không hút thuốc</option>
+              <option value="yes">Có hút thuốc</option>
+              </Form.Select>
+              </Form.Group>
+              </Col>
+             </Row>
 
 
-                <Form.Group controlId='phone' className='p-1'>
-                <Form.Label style={{fontSize:'14px'}}>Công việc</Form.Label>
-                <Form.Select aria-label="Default select example"
-                value={congviec}
-                onChange={(e) => setcongviec(e.target.value)}
-                >
-                <option>Công việc</option>
-                <option value="gov">Nhà nước</option>
-                <option value="never">Không rõ</option>
-                <option value="private">Tư nhân</option>
-                <option value="children">Trẻ em</option>
-                <option value="self">Nội trợ</option>
-                </Form.Select>
-                </Form.Group>
+              <Form.Group  className='p-1'>
+              
+                <Button  type='submit' className='mt-2' style={{backgroundColor:'#67ade9 '}}>Lưu thông tin</Button>
+              </Form.Group>
 
-                <Form.Group controlId='phone' className='p-1'>
-                <Form.Label style={{fontSize:'14px'}}>Hút thuốc</Form.Label>
-                <Form.Select aria-label="Default select example"
-                value={hutthuoc}
-                onChange={(e) => sethutthuoc(e.target.value)}
-                >
-                <option>Hút thuốc</option>
-                <option value="usually">Thường xuyên</option>
-                <option value="unknown">Không rõ</option>
-                <option value="no">Không hút thuốc</option>
-                <option value="yes">Có hút thuốc</option>
-                </Form.Select>
-                </Form.Group>
-
-                <Form.Group  className='p-1'>
-                
-                  <Button  type='submit' style={{backgroundColor:'#61b337'}}>Lưu</Button>
-                </Form.Group>
-
-            </Form>
-            )}
-           
-        </Row>
-    </Container>
+          </Form>
+          )}
+         
+      </Row>
+      </Col>
+    </Row>
+        
   )
 }
 

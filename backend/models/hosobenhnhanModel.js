@@ -73,7 +73,7 @@ const hosoSchema = mongoose.Schema({
     stroke: {
         type: Number,
         default: 0
-    }
+    },
 },{
     timestamps: true
 })
